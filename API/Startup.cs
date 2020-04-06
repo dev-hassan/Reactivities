@@ -65,14 +65,13 @@ namespace API
 
             services.AddAuthorization(opt =>
             {
-                opt.AddPolicy("IsActivityHost",policy =>
+                opt.AddPolicy("IsActivityHost", policy =>
                 {
-                        policy.Requirements.Add(new IsHostRequirement());
-
+                    policy.Requirements.Add(new IsHostRequirement());
                 });
             });
 
-            services.AddTransient<IAuthorizationHandler , IsHostRequirementHandler>();
+            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
