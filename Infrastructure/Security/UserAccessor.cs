@@ -19,7 +19,7 @@ namespace Infrastructure.Security
                 x => x.Type == ClaimTypes.NameIdentifier
             )?.Value;
 
-            return username;
+            return username?.ToLower();
         }
     }
 }

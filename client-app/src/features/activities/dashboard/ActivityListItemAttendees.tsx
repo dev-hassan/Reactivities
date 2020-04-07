@@ -1,15 +1,19 @@
-import React from 'react';
-import { List, Image, Popup } from 'semantic-ui-react';
-import { IAttendee } from '../../../app/models/activity';
+import React from "react";
+import { List, Image, Popup } from "semantic-ui-react";
+import { IAttendee } from "../../../app/models/activity";
 
 interface IProps {
   attendees: IAttendee[];
 }
 
 const ActivityListItemAttendees: React.FC<IProps> = ({ attendees }) => {
+  const styles = {
+    borderColor: "orange",
+    borderWidth: 2,
+  };
   return (
     <List horizontal>
-      {attendees.map(attendee => (
+      {attendees.map((attendee) => (
         <List.Item key={attendee.username}>
           <Popup
             header={attendee.displayName}
@@ -17,7 +21,9 @@ const ActivityListItemAttendees: React.FC<IProps> = ({ attendees }) => {
               <Image
                 size='mini'
                 circular
-                src={attendee.image || '/assets/user.png'}
+                src={attendee.image || "/assets/user.png"}
+                bordered
+                style={attendee.following ? styles : null}
               />
             }
           />
