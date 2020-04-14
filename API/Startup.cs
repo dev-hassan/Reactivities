@@ -182,6 +182,7 @@ namespace API
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero
                     };
+                    //configuer access token in header for chating hub requests
                     opt.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = context =>
