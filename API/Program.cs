@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Domain;
@@ -43,7 +44,10 @@ namespace API
         Host.CreateDefaultBuilder(args)
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseKestrel(x => x.AddServerHeader = false).UseStartup<Startup>();
+                //webBuilder.UseKestrel(x => x.AddServerHeader = false).UseStartup<Startup>();
+                webBuilder.UseContentRoot(Directory.GetCurrentDirectory() + "/wwwroot");
+                webBuilder.UseIISIntegration();
+                webBuilder.UseStartup<Startup>();
             });
     }
 }
