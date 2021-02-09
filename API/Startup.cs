@@ -9,6 +9,7 @@ using Application.Profiles;
 using AutoMapper;
 using Domain;
 using FluentValidation.AspNetCore;
+using Infrastructure.DB;
 using Infrastructure.Photos;
 using Infrastructure.Security;
 using MediatR;
@@ -117,6 +118,7 @@ namespace API
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
+            services.AddScoped<ISP_Call, SP_Call>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
             ConfigureServices(services);
@@ -182,6 +184,7 @@ namespace API
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero
                     };
+                    //configuer access token in header for chating hub requests
                     opt.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = context =>
@@ -202,6 +205,7 @@ namespace API
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
             services.AddScoped<IProfileReader, ProfileReader>();
+            services.AddScoped<ISP_Call, SP_Call>();
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
             ConfigureServices(services);

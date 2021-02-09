@@ -44,11 +44,13 @@ namespace Application.Activities
             private readonly DataContext _context;
             private readonly IMapper _mapper;
             private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
+            private readonly ISP_Call _spCall;
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor, ISP_Call spCall)
             {
                 _userAccessor = userAccessor;
                 _mapper = mapper;
                 _context = context;
+                _spCall = spCall;
             }
 
 
@@ -59,6 +61,12 @@ namespace Application.Activities
                     .Where(x => x.Date >= request.StartDate)
                     .OrderBy(x => x.Date)
                     .AsQueryable();
+
+                //var list = _spCall.ReturnList<Activity>("GetActivities_SP")
+                //    .Where(x => x.Date >= request.StartDate)
+                //    .OrderBy(x => x.Date)
+                //    .AsQueryable();
+
 
                 if (request.IsGoing && !request.IsHost)
                 {
@@ -71,6 +79,7 @@ namespace Application.Activities
                     queryable = queryable.Where(x => x.UserActivities.Any(a => a.AppUser.UserName ==
                     _userAccessor.GetCurrentUsername() && a.IsHost == true));
                 }
+
                 var activities = await queryable
                     .Skip(request.Offest ?? 0)
                     .Take(request.Limit ?? 3).ToListAsync();
